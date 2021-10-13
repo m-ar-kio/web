@@ -100,7 +100,7 @@ export default function Layout({
               <StyledLink href="/inbox">Inbox</StyledLink>
             </StyledNavigationItem>
             <StyledNavigationItem>
-              {address && <Button>{address}</Button>}
+              {address && <Button>{ellipsis(address, 8, 8)}</Button>}
             </StyledNavigationItem>
           </StyledNavigationList>
           <StyledNavigationList $align={ALIGN.right} />

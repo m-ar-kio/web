@@ -1,6 +1,8 @@
 import * as React from "react"
 import { Block } from "baseui/block"
 import { Twitter, Link } from "react-feather"
+import { ellipsis } from "../Layout"
+import dayjs from "dayjs"
 
 export default function Tweet({ tree, reactOutput, mark }) {
   return (
@@ -26,7 +28,6 @@ export default function Tweet({ tree, reactOutput, mark }) {
       <Block
         display="flex"
         alignItems="center"
-        justifyContent="space-between"
         flexDirection="row"
         overrides={{
           Block: {
@@ -37,13 +38,33 @@ export default function Tweet({ tree, reactOutput, mark }) {
           },
         }}
       >
-        <Twitter color="#002FA7" />
+        <a
+          href={mark.origin}
+          target="_blank"
+          style={{ display: "flex", alignItems: "center", marginRight: 20 }}
+        >
+          <span style={{ marginRight: 10 }}>Origin:</span>
+          <Twitter color="#002FA7" />
+        </a>
         <a
           href={`https://viewblock.io/arweave/tx/${mark.txId}`}
           target="_blank"
+          style={{ display: "flex", alignItems: "center", marginRight: 20 }}
         >
+          <span style={{ marginRight: 10 }}>HASH:</span>
           <Link color="#002FA7" />
         </a>
+        <a
+          href={`https://viewblock.io/arweave/address/${mark.sender}`}
+          target="_blank"
+          style={{ marginRight: 20 }}
+        >
+          <span style={{ marginRight: 10 }}>Marker:</span>
+          <span>{ellipsis(mark.sender, 5, 6)}</span>
+        </a>
+        <span style={{ marginRight: 20 }}>{`Created at: ${dayjs(
+          mark.timestamp * 1000
+        ).format("YYYY-MM-DD HH:MM")}`}</span>
       </Block>
     </Block>
   )

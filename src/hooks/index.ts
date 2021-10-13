@@ -32,18 +32,37 @@ export const useMyMarks = (address: string) => {
         if (transactions.length > 0) {
           Promise.all(
             transactions.map(tx => {
-              return arweave.transactions.get(tx).then(async tx => tx.data)
+              return arweave.transactions.get(tx).then(async tx => {
+                return arweave.wallets.ownerToAddress(tx.owner).then(t => {
+                  let timestamp = 0
+                  tx.tags.forEach((tag: any) => {
+                    let key = tag.get("name", { decode: true, string: true })
+                    let value = tag.get("value", { decode: true, string: true })
+                    if (key === "Unix-Time") {
+                      timestamp = Number(value)
+                    }
+                  })
+                  return {
+                    sender: t,
+                    data: tx.data,
+                    timestamp,
+                  }
+                })
+              })
             })
           )
             .then(results => {
               setMarks(
-                results.map((t, idx) => {
+                results.map((t: any, idx) => {
                   return {
-                    bm: JSON.parse(arweave.utils.bufferToString(t as any)),
+                    bm: JSON.parse(arweave.utils.bufferToString(t.data)),
                     txId: transactions[idx],
+                    sender: t.sender,
+                    timestamp: t.timestamp,
                   }
                 })
               )
+              setIsLoadingMarks(false)
             })
             .catch(() => {
               setIsLoadingMarks(false)
@@ -98,18 +117,37 @@ export const useLatestMarks = () => {
         if (transactions.length > 0) {
           Promise.all(
             transactions.map(tx => {
-              return arweave.transactions.get(tx).then(async tx => tx.data)
+              return arweave.transactions.get(tx).then(async tx => {
+                return arweave.wallets.ownerToAddress(tx.owner).then(t => {
+                  let timestamp = 0
+                  tx.tags.forEach((tag: any) => {
+                    let key = tag.get("name", { decode: true, string: true })
+                    let value = tag.get("value", { decode: true, string: true })
+                    if (key === "Unix-Time") {
+                      timestamp = Number(value)
+                    }
+                  })
+                  return {
+                    sender: t,
+                    data: tx.data,
+                    timestamp,
+                  }
+                })
+              })
             })
           )
             .then(results => {
               setMarks(
-                results.map((t, idx) => {
+                results.map((t: any, idx) => {
                   return {
-                    bm: JSON.parse(arweave.utils.bufferToString(t as any)),
+                    bm: JSON.parse(arweave.utils.bufferToString(t.data)),
                     txId: transactions[idx],
+                    sender: t.sender,
+                    timestamp: t.timestamp,
                   }
                 })
               )
+              setIsLoadingMarks(false)
             })
             .catch(() => {
               setIsLoadingMarks(false)

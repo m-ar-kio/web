@@ -4,11 +4,12 @@ import "../styles/index.css"
 import Layout from "../components/Layout"
 import Mark from "../components/Mark"
 import { useLatestMarks } from "../hooks"
+import { H1 } from "baseui/typography"
+import { StyledSpinnerNext } from "baseui/spinner"
 
 function Index() {
   const { isLoading, marks } = useLatestMarks()
 
-  console.log(marks)
   return (
     <Layout title="m-ar-k">
       <Block
@@ -17,8 +18,20 @@ function Index() {
         flexDirection="column"
         justifyContent="center"
       >
+        <H1>Marks Feed</H1>
+        {isLoading && <StyledSpinnerNext size="100px" />}
         {marks.map(m => {
-          return <Mark key={m.txId} mark={m.bm} />
+          return (
+            <Mark
+              key={m.txId}
+              mark={{
+                ...m.bm,
+                txId: m.txId,
+                sender: m.sender,
+                timestamp: m.timestamp,
+              }}
+            />
+          )
         })}
       </Block>
     </Layout>

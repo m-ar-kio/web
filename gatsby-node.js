@@ -1,7 +1,24 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
+const webpack = require("webpack")
 
-// You can delete this file if you're not using it
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      alias: {
+        process: "process/browser",
+        crypto: "crypto-browserify",
+        stream: "stream-browserify",
+      },
+      fallback: {
+        util: require.resolve("util"),
+        process: require.resolve("process/browser"),
+        crypto: require.resolve("crypto-browserify"),
+        stream: require.resolve("stream-browserify"),
+      },
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+        process: "process/browser",
+      }),
+    ],
+  })
+}
