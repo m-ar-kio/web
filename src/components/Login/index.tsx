@@ -26,9 +26,23 @@ export default function Login() {
               reader.onload = () => {
                 const keyfile = JSON.parse(reader.result as string)
 
+                sessionStorage.setItem("keyfile", reader.result as string)
                 if (keyfile.kty === "RSA") {
-                  sessionStorage.setItem("keyfile", reader.result as string)
-                  window.location.reload()
+                  import("arweave/web").then((Arweave: any) => {
+                    const arweave = Arweave.default.init({
+                      host: "arweave.net",
+                      port: 443,
+                      protocol: "https",
+                    })
+                    arweave.wallets
+                      .jwkToAddress(JSON.parse(reader.result as string))
+                      .then(address => {
+                        console.log(address)
+                        localStorage.setItem("address", address)
+                        window.location.reload()
+                      })
+                      .catch(console.log)
+                  })
                 } else {
                   setErrorMessage("Error: Not a keyfile")
                 }

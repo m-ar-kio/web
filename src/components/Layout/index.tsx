@@ -59,18 +59,9 @@ export default function Layout({
   const [engine, setEngine] = useState(null)
 
   useEffect(() => {
-    const _keyfile = sessionStorage.getItem("keyfile")
-    if (_keyfile && typeof window !== "undefined") {
-      import("arweave/web").then((Arweave: any) => {
-        const arweave = Arweave.default.init({
-          host: "arweave.net",
-          port: 443,
-          protocol: "https",
-        })
-        arweave.wallets.jwkToAddress(JSON.parse(_keyfile)).then(address => {
-          setAddress(address)
-        })
-      })
+    if (typeof window !== "undefined") {
+      const address = localStorage.getItem("address")
+      setAddress(address)
     }
 
     import("styletron-engine-atomic").then(styletron => {

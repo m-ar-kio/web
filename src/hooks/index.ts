@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
-// import Arweave from "arweave/web"
 
 export const useMyMarks = (address: string) => {
   const [marks, setMarks] = useState([])
   const [isLoadingMarks, setIsLoadingMarks] = useState(true)
 
   useEffect(() => {
+    if (!address) {
+      return
+    }
     if (!marks.length && typeof window !== "undefined") {
-      // const Arweave = require("arweave/web")
       import("arweave/web").then((Arweave: any) => {
         const arweave = Arweave.default.init({
           host: "arweave.net",

@@ -1,8 +1,9 @@
 import * as React from "react"
 import { Block } from "baseui/block"
-import { Twitter, Link } from "react-feather"
+import { Link } from "react-feather"
 import { ellipsis } from "../Layout"
 import dayjs from "dayjs"
+import TwitterLogo from "../../images/source/twitter.svg"
 
 export default function Tweet({ tree, reactOutput, mark }) {
   return (
@@ -11,7 +12,12 @@ export default function Tweet({ tree, reactOutput, mark }) {
       width="800px"
       overrides={{
         Block: {
-          style: { padding: "20px", borderBottom: "3px solid #e3e3e3" },
+          style: {
+            padding: "20px",
+            border: "#222326 1px solid",
+            margin: "10px",
+            boxShadow: "8px 8px 0px 0px #222326",
+          },
         },
       }}
     >
@@ -28,12 +34,14 @@ export default function Tweet({ tree, reactOutput, mark }) {
       <Block
         display="flex"
         alignItems="center"
+        justifyContent="space-between"
         flexDirection="row"
         overrides={{
           Block: {
             style: {
-              paddingLeft: "70px",
               paddingTop: "15px",
+              borderTop: "#222326 1px solid",
+              marginTop: "15px",
             },
           },
         }}
@@ -41,15 +49,16 @@ export default function Tweet({ tree, reactOutput, mark }) {
         <a
           href={mark.origin}
           target="_blank"
-          style={{ display: "flex", alignItems: "center", marginRight: 20 }}
+          style={{ display: "flex", alignItems: "center" }}
         >
           <span style={{ marginRight: 10 }}>Origin:</span>
-          <Twitter color="#002FA7" />
+          {/* <Twitter color="#002FA7" /> */}
+          <img src={TwitterLogo} alt="twitter" height="30px" />
         </a>
         <a
           href={`https://viewblock.io/arweave/tx/${mark.txId}`}
           target="_blank"
-          style={{ display: "flex", alignItems: "center", marginRight: 20 }}
+          style={{ display: "flex", alignItems: "center" }}
         >
           <span style={{ marginRight: 10 }}>HASH:</span>
           <Link color="#002FA7" />
@@ -57,7 +66,6 @@ export default function Tweet({ tree, reactOutput, mark }) {
         <a
           href={`https://viewblock.io/arweave/address/${mark.sender}`}
           target="_blank"
-          style={{ marginRight: 20 }}
         >
           <span style={{ marginRight: 10 }}>Marker:</span>
           <span>{ellipsis(mark.sender, 5, 6)}</span>

@@ -5,7 +5,7 @@ import Layout from "../components/Layout"
 import Mark from "../components/Mark"
 import { useLatestMarks } from "../hooks"
 import { H1 } from "baseui/typography"
-import { StyledSpinnerNext } from "baseui/spinner"
+import { Spinner } from "baseui/spinner"
 
 function Index() {
   const { isLoading, marks } = useLatestMarks()
@@ -19,7 +19,7 @@ function Index() {
         justifyContent="center"
       >
         <H1>Marks Feed</H1>
-        {isLoading && <StyledSpinnerNext size="100px" />}
+        {isLoading && <Spinner size="100px" color="#222326" />}
         {marks.map(m => {
           return (
             <Mark
