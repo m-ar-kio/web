@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Block } from "baseui/block"
-import Arweave from "arweave/web"
+// import Arweave from "arweave/web"
 import "../styles/index.css"
 import Layout from "../components/Layout"
 import Mark from "../components/Mark"
@@ -15,14 +15,16 @@ function Index() {
 
   useEffect(() => {
     const _keyfile = sessionStorage.getItem("keyfile")
-    if (_keyfile) {
-      const arweave = Arweave.init({
-        host: "arweave.net",
-        port: 443,
-        protocol: "https",
-      })
-      arweave.wallets.jwkToAddress(JSON.parse(_keyfile)).then(address => {
-        setAddress(address)
+    if (_keyfile && typeof window !== "undefined") {
+      import("arweave/web").then((Arweave: any) => {
+        const arweave = Arweave.default.init({
+          host: "arweave.net",
+          port: 443,
+          protocol: "https",
+        })
+        arweave.wallets.jwkToAddress(JSON.parse(_keyfile)).then(address => {
+          setAddress(address)
+        })
       })
     }
   }, [])

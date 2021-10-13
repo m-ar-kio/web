@@ -5093,6 +5093,13 @@ gatsby-plugin-react-helmet@^4.14.0:
   dependencies:
     "@babel/runtime" "^7.15.4"
 
+gatsby-plugin-styletron@^6.14.0:
+  version "6.14.0"
+  resolved "https://registry.npmjs.org/gatsby-plugin-styletron/-/gatsby-plugin-styletron-6.14.0.tgz#93f34deb6bd0c4d1c3a937af4f0b6f878162b0af"
+  integrity sha512-cuCbR4gKpMZAJKfnOcyUoA2JyhuxmxVYuMcTeK2goP7V7MFUwXYbVuYN/I2b1GL9Dqszrg6VVKYmEIvEi6qeZw==
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+
 gatsby-plugin-typescript@^3.14.0:
   version "3.14.0"
   resolved "https://registry.npmjs.org/gatsby-plugin-typescript/-/gatsby-plugin-typescript-3.14.0.tgz#5f079f59576f768025cad0d79feaf62c00812a96"

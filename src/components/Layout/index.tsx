@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Arweave from "arweave/web"
-import { Client } from "styletron-engine-atomic"
-import { Provider as StyletronProvider } from "styletron-react"
+import { Provider as StyletronProvider, useStyletron } from "styletron-react"
 import { LightTheme, BaseProvider, styled } from "baseui"
 import {
   HeaderNavigation,
@@ -11,10 +9,7 @@ import {
 } from "baseui/header-navigation"
 import { StyledLink } from "baseui/link"
 import { Button } from "baseui/button"
-import { Block } from "baseui/block"
 import { Helmet } from "react-helmet"
-
-const engine = new Client()
 
 const HCentered = styled("p", {
   display: "flex",
@@ -61,20 +56,33 @@ export default function Layout({
   children?: any
 }) {
   const [address, setAddress] = useState("")
+  const [engine, setEngine] = useState(null)
 
   useEffect(() => {
     const _keyfile = sessionStorage.getItem("keyfile")
-    if (_keyfile) {
-      const arweave = Arweave.init({
-        host: "arweave.net",
-        port: 443,
-        protocol: "https",
-      })
-      arweave.wallets.jwkToAddress(JSON.parse(_keyfile)).then(address => {
-        setAddress(address)
+    if (_keyfile && typeof window !== "undefined") {
+      import("arweave/web").then((Arweave: any) => {
+        const arweave = Arweave.default.init({
+          host: "arweave.net",
+          port: 443,
+          protocol: "https",
+        })
+        arweave.wallets.jwkToAddress(JSON.parse(_keyfile)).then(address => {
+          setAddress(address)
+        })
       })
     }
+
+    import("styletron-engine-atomic").then(styletron => {
+      const _engine =
+        typeof window !== "undefined"
+          ? new styletron.Client()
+          : new styletron.Server()
+      setEngine(_engine)
+    })
   }, [])
+
+  if (!engine) return null
 
   return (
     <StyletronProvider value={engine}>
