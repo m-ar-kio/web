@@ -10,6 +10,8 @@ import { Spinner } from "baseui/spinner"
 function Index() {
   const { isLoading, marks } = useLatestMarks()
 
+  console.log("###", marks)
+
   return (
     <Layout title="m-ar-k">
       <Block

@@ -5,7 +5,7 @@ import { ellipsis } from "../Layout"
 import dayjs from "dayjs"
 import Source from "./Source"
 
-export default function Tweet({ tree, reactOutput, mark, parsedURL }) {
+export default function Article({ tree, reactOutput, mark, parsedURL }) {
   return (
     <Block
       className="mark tweet"
@@ -21,16 +21,7 @@ export default function Tweet({ tree, reactOutput, mark, parsedURL }) {
         },
       }}
     >
-      <Block
-        className="author"
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-      >
-        {reactOutput(tree[0])}
-        {reactOutput(tree[1])}
-      </Block>
-      <Block className="content">{reactOutput(tree.slice(2))}</Block>
+      <Block className="content">{reactOutput(tree)}</Block>
       <Block
         display="flex"
         alignItems="center"

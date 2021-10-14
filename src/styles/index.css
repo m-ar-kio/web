@@ -34,3 +34,9 @@ a {
 .mark.tweet .content img {
   max-width: 100%;
 }
+
+blockquote {
+  background: #e3e3e3;
+  margin: 0.5em;
+  padding: 1em;
+}

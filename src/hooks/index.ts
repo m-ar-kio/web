@@ -34,12 +34,17 @@ export const useMyMarks = (address: string) => {
 
           if (transactions.length > 0) {
             Promise.all(
-              transactions.map(tx => {
-                return arweave.transactions.get(tx).then(async tx => {
-                  return arweave.wallets.ownerToAddress(tx.owner).then(t => {
+              transactions.map(txId => {
+                return new Promise(async (resolve, reject) => {
+                  try {
+                    const tx = await arweave.transactions.get(txId)
+                    const owner = await arweave.wallets.ownerToAddress(tx.owner)
                     let timestamp = 0
                     tx.tags.forEach((tag: any) => {
-                      let key = tag.get("name", { decode: true, string: true })
+                      let key = tag.get("name", {
+                        decode: true,
+                        string: true,
+                      })
                       let value = tag.get("value", {
                         decode: true,
                         string: true,
@@ -48,25 +53,29 @@ export const useMyMarks = (address: string) => {
                         timestamp = Number(value)
                       }
                     })
-                    return {
-                      sender: t,
+                    resolve({
+                      sender: owner,
                       data: tx.data,
                       timestamp,
-                    }
-                  })
+                    })
+                  } catch (error) {
+                    resolve(null)
+                  }
                 })
               })
             )
               .then(results => {
                 setMarks(
-                  results.map((t: any, idx) => {
-                    return {
-                      bm: JSON.parse(arweave.utils.bufferToString(t.data)),
-                      txId: transactions[idx],
-                      sender: t.sender,
-                      timestamp: t.timestamp,
-                    }
-                  })
+                  results
+                    .filter(t => t)
+                    .map((t: any, idx) => {
+                      return {
+                        bm: JSON.parse(arweave.utils.bufferToString(t.data)),
+                        txId: transactions[idx],
+                        sender: t.sender,
+                        timestamp: t.timestamp,
+                      }
+                    })
                 )
                 setIsLoadingMarks(false)
               })
@@ -120,16 +129,21 @@ export const useLatestMarks = () => {
           },
         }
         arweave.api.post(`arql`, query).then(async response => {
-          let transactions = response.data
+          const transactions = response.data
 
           if (transactions.length > 0) {
             Promise.all(
-              transactions.map(tx => {
-                return arweave.transactions.get(tx).then(async tx => {
-                  return arweave.wallets.ownerToAddress(tx.owner).then(t => {
+              transactions.map(txId => {
+                return new Promise(async (resolve, reject) => {
+                  try {
+                    const tx = await arweave.transactions.get(txId)
+                    const owner = await arweave.wallets.ownerToAddress(tx.owner)
                     let timestamp = 0
                     tx.tags.forEach((tag: any) => {
-                      let key = tag.get("name", { decode: true, string: true })
+                      let key = tag.get("name", {
+                        decode: true,
+                        string: true,
+                      })
                       let value = tag.get("value", {
                         decode: true,
                         string: true,
@@ -138,25 +152,30 @@ export const useLatestMarks = () => {
                         timestamp = Number(value)
                       }
                     })
-                    return {
-                      sender: t,
+                    resolve({
+                      sender: owner,
                       data: tx.data,
                       timestamp,
-                    }
-                  })
+                    })
+                  } catch (error) {
+                    resolve(null)
+                  }
                 })
               })
             )
               .then(results => {
+                console.log("###", results)
                 setMarks(
-                  results.map((t: any, idx) => {
-                    return {
-                      bm: JSON.parse(arweave.utils.bufferToString(t.data)),
-                      txId: transactions[idx],
-                      sender: t.sender,
-                      timestamp: t.timestamp,
-                    }
-                  })
+                  results
+                    .filter(t => t)
+                    .map((t: any, idx) => {
+                      return {
+                        bm: JSON.parse(arweave.utils.bufferToString(t.data)),
+                        txId: transactions[idx],
+                        sender: t.sender,
+                        timestamp: t.timestamp,
+                      }
+                    })
                 )
                 setIsLoadingMarks(false)
               })
