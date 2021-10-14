@@ -8,7 +8,7 @@ import Source from "./Source"
 export default function Article({ tree, reactOutput, mark, parsedURL }) {
   return (
     <Block
-      className="mark tweet"
+      className="mark article"
       width="800px"
       overrides={{
         Block: {

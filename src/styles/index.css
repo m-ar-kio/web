@@ -27,12 +27,17 @@ a {
   margin-right: 10px;
 }
 
-.mark.tweet .content {
+.mark .content {
   font-size: 20px;
+}
+
+.mark.tweet .content {
   padding-left: 70px;
 }
-.mark.tweet .content img {
+.mark .content img {
   max-width: 100%;
+  margin: 0 auto;
+  display: block;
 }
 
 blockquote {
