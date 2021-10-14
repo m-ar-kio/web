@@ -6,7 +6,12 @@ import { isTwitter } from "./helper"
 import Tweet from "./Tweet"
 import Article from "./Article"
 
-export default function Mark({ mark }) {
+interface Props {
+  mark: any
+  isInModal?: boolean
+}
+
+export default function Mark({ mark, isInModal }: Props) {
   const rules = {
     ...SimpleMarkdown.defaultRules,
     ...initTwitterRules(mark),
@@ -29,6 +34,7 @@ export default function Mark({ mark }) {
         reactOutput={reactOutput}
         mark={mark}
         parsedURL={parsedURL}
+        isInModal={isInModal}
       />
     )
   }
@@ -38,6 +44,7 @@ export default function Mark({ mark }) {
       reactOutput={reactOutput}
       mark={mark}
       parsedURL={parsedURL}
+      isInModal={isInModal}
     />
   )
 }

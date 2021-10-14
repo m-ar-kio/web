@@ -3,14 +3,15 @@ import { Block } from "baseui/block"
 import "../styles/index.css"
 import Layout from "../components/Layout"
 import Mark from "../components/Mark"
-import { useMyMarks } from "../hooks"
+import { useMyMarkFlow, useMyMarks } from "../hooks"
 import Login from "../components/Login"
 import { Spinner } from "baseui/spinner"
 import { H1 } from "baseui/typography"
+import { formatMark } from "../utils/format"
 
 function Index() {
   const [address, setAddress] = useState("")
-  const { isLoading, marks } = useMyMarks(address)
+  const { isLoading, marks } = useMyMarkFlow(address)
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -32,17 +33,7 @@ function Index() {
         {isLoading && <Spinner size="100px" color="#222326" />}
         {address &&
           marks.map(m => {
-            return (
-              <Mark
-                key={m.txId}
-                mark={{
-                  ...m.bm,
-                  txId: m.txId,
-                  sender: m.sender,
-                  timestamp: m.timestamp,
-                }}
-              />
-            )
+            return <Mark key={m.id} mark={formatMark(m)} />
           })}
       </Block>
     </Layout>

@@ -24,9 +24,9 @@ export default function Source({ parsedURL }) {
       rel="noreferrer"
       style={{ display: "flex", alignItems: "center" }}
     >
-      <span style={{ marginRight: 10 }}>Origin:</span>
+      <span style={{ marginRight: 4 }}>Origin:</span>
       {src ? (
-        <img src={src} alt="twitter" height="30px" />
+        <img src={src} alt="twitter" height="20px" />
       ) : (
         <span>{hostname}</span>
       )}

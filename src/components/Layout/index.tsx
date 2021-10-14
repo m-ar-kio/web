@@ -82,6 +82,10 @@ export default function Layout({
           <title>{title}</title>
           <meta name="description" content="" />
           <link rel="icon" href="/favicon.ico" />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Work+Sans"
+          />
         </Helmet>
         <HeaderNavigation>
           <StyledNavigationList $align={ALIGN.left}>
@@ -95,6 +99,9 @@ export default function Layout({
           </StyledNavigationList>
           <StyledNavigationList $align={ALIGN.center} />
           <StyledNavigationList $align={ALIGN.right}>
+            <StyledNavigationItem>
+              <StyledLink href="/">Home</StyledLink>
+            </StyledNavigationItem>
             <StyledNavigationItem>
               <StyledLink href="/inbox">Inbox</StyledLink>
             </StyledNavigationItem>
