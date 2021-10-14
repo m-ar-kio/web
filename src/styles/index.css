@@ -29,6 +29,7 @@ a {
 
 .mark .content {
   font-size: 20px;
+  line-height: 1.6;
 }
 
 .mark.tweet .content {
