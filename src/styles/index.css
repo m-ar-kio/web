@@ -63,6 +63,10 @@ u {
   display: block;
 }
 
+.mark .footer {
+  font-size: 14px;
+}
+
 blockquote {
   background: #e3e3e3;
   margin: 0.5em;

@@ -10,6 +10,7 @@ import {
 import { StyledLink } from "baseui/link"
 import { Button } from "baseui/button"
 import { Helmet } from "react-helmet"
+import LOGO from "../../images/logo.svg"
 
 const HCentered = styled("p", {
   display: "flex",
@@ -91,9 +92,7 @@ export default function Layout({
           <StyledNavigationList $align={ALIGN.left}>
             <StyledNavigationItem>
               <StyledLink href="/">
-                <HCentered>
-                  m<SpanAR>ar</SpanAR>k
-                </HCentered>
+                <img src={LOGO} alt="LOGO" height="50px" />
               </StyledLink>
             </StyledNavigationItem>
           </StyledNavigationList>

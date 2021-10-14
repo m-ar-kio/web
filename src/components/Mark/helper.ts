@@ -5,3 +5,5 @@ export const isMedium = hostname => hostname.includes("medium.com")
 export const isNyTimes = hostname => hostname.includes("nytimes.com")
 
 export const isBBC = hostname => hostname.includes("bbc.com")
+
+export const isTime = hostname => hostname.includes("time.com")
