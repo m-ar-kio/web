@@ -10,10 +10,14 @@ export default function Login() {
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
-      window.arweaveWallet.getActiveAddress().then(address => {
-        localStorage.setItem("address", address)
-        window.location.reload()
-      })
+      if (window.arweaveWallet) {
+        window.arweaveWallet.getActiveAddress().then(address => {
+          if (address) {
+            localStorage.setItem("address", address)
+            window.location.reload()
+          }
+        })
+      }
       window.addEventListener("arweaveWalletLoaded", e => {
         console.log(e)
         /** Handle ArConnect load event **/
