@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { Provider as StyletronProvider, useStyletron } from "styletron-react"
-import { LightTheme, BaseProvider, styled } from "baseui"
+import { Provider as StyletronProvider } from "styletron-react"
+import { LightTheme, BaseProvider } from "baseui"
 import {
   HeaderNavigation,
   ALIGN,
@@ -10,6 +10,7 @@ import {
 import { StyledLink } from "baseui/link"
 import { Button } from "baseui/button"
 import { Helmet } from "react-helmet"
+import { ToasterContainer } from "baseui/toast"
 import "arconnect"
 import LOGO from "../../images/logo.svg"
 
@@ -105,6 +106,7 @@ export default function Layout({
           </StyledNavigationList>
           <StyledNavigationList $align={ALIGN.right} />
         </HeaderNavigation>
+        <ToasterContainer />
         {children}
         {/* <Block
           display="flex"

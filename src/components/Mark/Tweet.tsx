@@ -14,18 +14,6 @@ export default function Tweet({
   return (
     <Block
       className={`mark tweet ${isInModal ? "in-modal" : ""}`}
-      width="800px"
-      overrides={{
-        Block: {
-          style: {
-            padding: "20px",
-            border: "#222326 1px solid",
-            margin: "10px",
-            boxShadow: "8px 8px 0px 0px #222326",
-            cursor: "pointer",
-          },
-        },
-      }}
       onClick={() => !isInModal && setViewMode(true)}
     >
       <Block
