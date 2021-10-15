@@ -1,20 +1,44 @@
 import * as React from "react"
 import { FileUploader } from "baseui/file-uploader"
 import { Block } from "baseui/block"
-import { H1, H6 } from "baseui/typography"
+import { H1 } from "baseui/typography"
+import { Button } from "baseui/button"
+import "arconnect"
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = React.useState("")
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.arweaveWallet.getActiveAddress().then(address => {
+        localStorage.setItem("address", address)
+        window.location.reload()
+      })
+      window.addEventListener("arweaveWalletLoaded", e => {
+        console.log(e)
+        /** Handle ArConnect load event **/
+      })
+      window.addEventListener("walletSwitch", e => {
+        localStorage.setItem("address", e.detail.address)
+      })
+    }
+  })
   return (
     <Block
       width="100vw"
       padding="30px"
       display="flex"
+      flexDirection="column"
       alignItems="center"
       justifyContent="center"
     >
-      <Block width="500px">
-        <H1>Load your keyfile</H1>
+      <Block
+        width="500px"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+      >
         <FileUploader
           accept=".json"
           errorMessage={errorMessage}
@@ -52,7 +76,27 @@ export default function Login() {
             }
           }}
         />
-        <H6>m-ar-k won't upload or save your keyfile</H6>
+        <H1>OR</H1>
+
+        <Button
+          size="large"
+          overrides={{
+            BaseButton: {
+              style: ({ $theme }) => ({
+                padding: "15px 75px",
+              }),
+            },
+          }}
+          onClick={() => {
+            window.arweaveWallet.connect([
+              "ACCESS_ADDRESS",
+              "ACCESS_ALL_ADDRESSES",
+              "SIGN_TRANSACTION",
+            ])
+          }}
+        >
+          Connect
+        </Button>
       </Block>
     </Block>
   )
