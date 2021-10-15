@@ -10,30 +10,8 @@ import {
 import { StyledLink } from "baseui/link"
 import { Button } from "baseui/button"
 import { Helmet } from "react-helmet"
+import "arconnect"
 import LOGO from "../../images/logo.svg"
-
-const HCentered = styled("p", {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100%",
-  margin: "0px",
-  fontWeight: 800,
-  fontSize: "24px",
-})
-
-const SpanAR = styled("span", {
-  display: "inline-block",
-  border: "4px solid black",
-  borderRadius: "50%",
-  width: "40px",
-  height: "40px",
-  textAlign: "center",
-  paddingTop: "3px",
-  margin: "0px 4px 0px 4px",
-  fontWeight: 800,
-  boxSizing: "border-box",
-})
 
 export const ellipsis = (
   str: string,
@@ -62,7 +40,21 @@ export default function Layout({
   useEffect(() => {
     if (typeof window !== "undefined") {
       const address = localStorage.getItem("address")
-      setAddress(address)
+      if (address) {
+        setAddress(address)
+      } else {
+        if (window.arweaveWallet) {
+          window.arweaveWallet.getActiveAddress().then(address => {
+            if (address) {
+              localStorage.setItem("address", address)
+              window.location.reload()
+            }
+          })
+        }
+      }
+      window.addEventListener("walletSwitch", e => {
+        localStorage.setItem("address", e.detail.address)
+      })
     }
 
     import("styletron-engine-atomic").then(styletron => {

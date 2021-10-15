@@ -3,30 +3,9 @@ import { FileUploader } from "baseui/file-uploader"
 import { Block } from "baseui/block"
 import { H1 } from "baseui/typography"
 import { Button } from "baseui/button"
-import "arconnect"
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = React.useState("")
-
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (window.arweaveWallet) {
-        window.arweaveWallet.getActiveAddress().then(address => {
-          if (address) {
-            localStorage.setItem("address", address)
-            window.location.reload()
-          }
-        })
-      }
-      window.addEventListener("arweaveWalletLoaded", e => {
-        console.log(e)
-        /** Handle ArConnect load event **/
-      })
-      window.addEventListener("walletSwitch", e => {
-        localStorage.setItem("address", e.detail.address)
-      })
-    }
-  })
   return (
     <Block
       width="100vw"
@@ -92,11 +71,15 @@ export default function Login() {
             },
           }}
           onClick={() => {
-            window.arweaveWallet.connect([
-              "ACCESS_ADDRESS",
-              "ACCESS_ALL_ADDRESSES",
-              "SIGN_TRANSACTION",
-            ])
+            window.arweaveWallet
+              .connect([
+                "ACCESS_ADDRESS",
+                "ACCESS_ALL_ADDRESSES",
+                "SIGN_TRANSACTION",
+              ])
+              .then(value => {
+                window.location.reload()
+              })
           }}
         >
           Connect
