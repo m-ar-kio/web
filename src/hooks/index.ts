@@ -9,7 +9,6 @@ const formatTX = (ids, arweave) => {
           const tx = await arweave.transactions.get(txId)
           resolve(tx.data)
         } catch (error) {
-          console.log("###id error", error)
           resolve(null)
         }
       })
@@ -60,9 +59,15 @@ export const useMarkFlow = (page = 1) => {
           const datas = await formatTX(ids, arweave)
           const mks = txs.map((t, idx) => {
             if (!datas[idx]) return null
+            let bm = null
+            try {
+              bm = JSON.parse(arweave.utils.bufferToString(datas[idx]))
+            } catch (error) {
+              return null
+            }
             return {
               ...t,
-              bm: JSON.parse(arweave.utils.bufferToString(datas[idx])),
+              bm,
             }
           })
           setMarks(mks.filter(t => t))
@@ -124,9 +129,15 @@ export const useMyMarkFlow = (address, page = 1) => {
           const datas = await formatTX(ids, arweave)
           const mks = txs.map((t, idx) => {
             if (!datas[idx]) return null
+            let bm = null
+            try {
+              bm = JSON.parse(arweave.utils.bufferToString(datas[idx]))
+            } catch (error) {
+              return null
+            }
             return {
               ...t,
-              bm: JSON.parse(arweave.utils.bufferToString(datas[idx])),
+              bm,
             }
           })
           setMarks(mks.filter(t => t))

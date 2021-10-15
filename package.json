@@ -24,6 +24,7 @@
     "react-feather": "^2.0.9",
     "react-helmet": "^6.1.0",
     "simple-markdown": "^0.7.3",
+    "smartweave": "^0.4.45",
     "stream-browserify": "^3.0.0",
     "styletron-engine-atomic": "^1.4.8",
     "styletron-react": "^6.0.1",
