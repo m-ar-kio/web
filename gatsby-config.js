@@ -26,15 +26,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
-        start_url: `/`,
+        name: `m-ar-k`,
+        short_name: `m-ar-k`,
+        start_url: `.`,
         background_color: `#663399`,
-        // This will impact how browsers show your PWA/website
-        // https://css-tricks.com/meta-theme-color-and-trickery/
-        // theme_color: `#663399`,
-        display: `minimal-ui`,
+        display: "standalone",
         icon: `src/images/logo.png`,
+        crossOrigin: `use-credentials`,
       },
     },
     {

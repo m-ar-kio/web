@@ -44,12 +44,15 @@ export default function Layout({
         setAddress(address)
       } else {
         if (window.arweaveWallet) {
-          window.arweaveWallet.getActiveAddress().then(address => {
-            if (address) {
-              localStorage.setItem("address", address)
-              window.location.reload()
-            }
-          })
+          window.arweaveWallet
+            .getActiveAddress()
+            .then(address => {
+              if (address) {
+                localStorage.setItem("address", address)
+                window.location.reload()
+              }
+            })
+            .catch(() => {})
         }
       }
       window.addEventListener("walletSwitch", e => {
