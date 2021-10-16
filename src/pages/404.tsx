@@ -2,6 +2,7 @@ import React from "react"
 import { H1 } from "baseui/typography"
 import Layout from "../components/Layout"
 import { Block } from "baseui/block"
+import { Spinner } from "baseui/spinner"
 
 export default function NotFound() {
   return (

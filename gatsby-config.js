@@ -28,7 +28,7 @@ module.exports = {
       options: {
         name: `m-ar-k`,
         short_name: `m-ar-k`,
-        start_url: `.`,
+        start_url: `/`,
         background_color: `#663399`,
         display: "standalone",
         icon: `src/images/logo.png`,

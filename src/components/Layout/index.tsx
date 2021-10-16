@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Provider as StyletronProvider } from "styletron-react"
-import { LightTheme, BaseProvider } from "baseui"
+import { LightTheme, BaseProvider, DarkTheme } from "baseui"
 import {
   HeaderNavigation,
   ALIGN,
@@ -107,7 +107,7 @@ export default function Layout({
           <StyledNavigationList $align={ALIGN.right} />
         </HeaderNavigation>
         <ToasterContainer />
-        <Block>{children}</Block>
+        <main>{children}</main>
         <Block
           display="flex"
           alignItems="center"
@@ -123,6 +123,13 @@ export default function Layout({
             justifyContent="space-between"
           >
             <img src={LOGO} alt="LOGO" height="50px" />
+            <a
+              href="https://twitter.com/markarweave"
+              target="_blank"
+              style={{ marginLeft: 10, color: "white" }}
+            >
+              Twitter
+            </a>
             <a href="/about" style={{ marginLeft: 10, color: "white" }}>
               About
             </a>
@@ -136,18 +143,13 @@ export default function Layout({
               <a
                 href="https://viewblock.io/arweave/address/WBnjVFK2haoNYtmepHBxejjYvl7yiYoWcndPOo-DoIg"
                 target="_blank"
-                style={{ marginLeft: 10, color: "white" }}
+                style={{
+                  marginLeft: 10,
+                  color: "white",
+                  borderBottom: "1px solid white",
+                }}
               >
                 WBnjVFK2haoNYtmepHBxejjYvl7yiYoWcndPOo-DoIg
-              </a>
-            </Paragraph3>
-            <Paragraph3 color="white" $style={{ margin: "2px" }}>
-              <a
-                href="https://twitter.com/markarweave"
-                target="_blank"
-                style={{ color: "white" }}
-              >
-                Twitter
               </a>
             </Paragraph3>
           </Block>
