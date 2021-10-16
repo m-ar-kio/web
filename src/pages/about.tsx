@@ -1,13 +1,10 @@
 import React from "react"
 import Layout from "../components/Layout"
-import { Block } from "baseui/block"
-import { Spinner } from "baseui/spinner"
-import { H1 } from "baseui/typography"
 
 function About() {
   return (
     <Layout title="About">
-      <Block display="block" padding="0 200px">
+      <div style={{ padding: "0 200px" }}>
         <h1>About MARK</h1>
         <p>Mark is a bookmark tool running on arweave.</p>
         <p>
@@ -20,7 +17,8 @@ function About() {
           you found any mark helps you, you can also "buy a cup of coffee" for
           the marker.
         </p>
-      </Block>
+        <p>Happy to mark!</p>
+      </div>
     </Layout>
   )
 }

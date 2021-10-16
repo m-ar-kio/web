@@ -108,14 +108,16 @@ export default function Layout({
         </HeaderNavigation>
         <ToasterContainer />
         <main>{children}</main>
-        <Block
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          backgroundColor="#333"
-          padding="30px"
-          margin="0px"
-          marginTop="30px"
+        <div
+          style={{
+            display: "flex",
+            flexFlow: "row nowrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            background: "#333",
+            padding: 30,
+            marginTop: 30,
+          }}
         >
           <Block
             display="flex"
@@ -153,7 +155,7 @@ export default function Layout({
               </a>
             </Paragraph3>
           </Block>
-        </Block>
+        </div>
       </BaseProvider>
     </StyletronProvider>
   )
