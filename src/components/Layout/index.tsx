@@ -132,6 +132,13 @@ export default function Layout({
             >
               Twitter
             </a>
+            <a
+              href="https://github.com/m-ar-kio"
+              target="_blank"
+              style={{ marginLeft: 10, color: "white" }}
+            >
+              Github
+            </a>
             <a href="/about" style={{ marginLeft: 10, color: "white" }}>
               About
             </a>
