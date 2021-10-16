@@ -11,10 +11,12 @@ import { StyledLink } from "baseui/link"
 import { Button } from "baseui/button"
 import { Helmet } from "react-helmet"
 import { ToasterContainer } from "baseui/toast"
+import { Block } from "baseui/block"
 import "arconnect"
 import LOGO from "../../images/logo.svg"
 import { ellipsis } from "../../utils/format"
 import { getClaimableMark } from "../../utils/pst"
+import { Paragraph3 } from "baseui/typography"
 
 export default function Layout({
   title,
@@ -26,8 +28,6 @@ export default function Layout({
   const [address, setAddress] = useState("")
   const [engine, setEngine] = useState(null)
   const [claimable, setClaimable] = useState(0)
-
-  console.log("###", claimable)
 
   useEffect(() => {
     import("styletron-engine-atomic").then(styletron => {
@@ -106,13 +106,51 @@ export default function Layout({
           <StyledNavigationList $align={ALIGN.right} />
         </HeaderNavigation>
         <ToasterContainer />
-        {children}
-        {/* <Block
+        <Block>{children}</Block>
+        <Block
           display="flex"
+          alignItems="center"
           justifyContent="space-between"
           backgroundColor="#333"
           padding="30px"
-        ></Block> */}
+          margin="0px"
+          marginTop="30px"
+        >
+          <Block
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <img src={LOGO} alt="LOGO" height="50px" />
+            <a href="/about" style={{ marginLeft: 10, color: "white" }}>
+              About
+            </a>
+          </Block>
+          <Block>
+            <Paragraph3 color="white" $style={{ margin: "2px" }}>
+              © 2021 • all rights reserved.
+            </Paragraph3>
+            <Paragraph3 color="white" $style={{ margin: "2px" }}>
+              donate:
+              <a
+                href="https://viewblock.io/arweave/address/WBnjVFK2haoNYtmepHBxejjYvl7yiYoWcndPOo-DoIg"
+                target="_blank"
+                style={{ marginLeft: 10, color: "white" }}
+              >
+                WBnjVFK2haoNYtmepHBxejjYvl7yiYoWcndPOo-DoIg
+              </a>
+            </Paragraph3>
+            <Paragraph3 color="white" $style={{ margin: "2px" }}>
+              <a
+                href="https://twitter.com/markarweave"
+                target="_blank"
+                style={{ color: "white" }}
+              >
+                Twitter
+              </a>
+            </Paragraph3>
+          </Block>
+        </Block>
       </BaseProvider>
     </StyletronProvider>
   )
