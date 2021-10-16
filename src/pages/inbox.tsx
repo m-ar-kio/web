@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { Block } from "baseui/block"
-import "../styles/index.css"
 import Layout from "../components/Layout"
 import Mark from "../components/Mark"
 import { useMyMarkFlow } from "../hooks"
