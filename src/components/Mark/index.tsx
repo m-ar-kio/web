@@ -73,6 +73,7 @@ export default function Mark({ mark, isInModal, setCoffeeMark }: Props) {
       {content}
       {!!setCoffeeMark && (
         <Button
+          kind="secondary"
           overrides={{
             BaseButton: {
               style: {

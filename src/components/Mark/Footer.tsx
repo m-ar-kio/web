@@ -1,6 +1,6 @@
 import React from "react"
 import { Block } from "baseui/block"
-import { ellipsis } from "../Layout"
+import { ellipsis } from "../../utils/format"
 import dayjs from "dayjs"
 import Source from "./Source"
 

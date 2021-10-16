@@ -13,20 +13,8 @@ import { Helmet } from "react-helmet"
 import { ToasterContainer } from "baseui/toast"
 import "arconnect"
 import LOGO from "../../images/logo.svg"
-
-export const ellipsis = (
-  str: string,
-  lead: number = 3,
-  tail: number = 3
-): string => {
-  if (str && str.length > lead + tail + 8) {
-    return `${str.substring(0, lead)}...${str.substring(
-      str.length - tail,
-      str.length
-    )}`
-  }
-  return str
-}
+import { ellipsis } from "../../utils/format"
+import { getClaimableMark } from "../../utils/pst"
 
 export default function Layout({
   title,
@@ -37,8 +25,22 @@ export default function Layout({
 }) {
   const [address, setAddress] = useState("")
   const [engine, setEngine] = useState(null)
+  const [claimable, setClaimable] = useState(0)
+
+  console.log("###", claimable)
 
   useEffect(() => {
+    import("styletron-engine-atomic").then(styletron => {
+      const _engine =
+        typeof window !== "undefined"
+          ? new styletron.Client()
+          : new styletron.Server()
+      setEngine(_engine)
+    })
+    if (address) {
+      getClaimableMark(address).then(value => setClaimable(value))
+      return
+    }
     if (typeof window !== "undefined") {
       const address = localStorage.getItem("address")
       if (address) {
@@ -60,15 +62,7 @@ export default function Layout({
         localStorage.setItem("address", e.detail.address)
       })
     }
-
-    import("styletron-engine-atomic").then(styletron => {
-      const _engine =
-        typeof window !== "undefined"
-          ? new styletron.Client()
-          : new styletron.Server()
-      setEngine(_engine)
-    })
-  }, [])
+  }, [address])
 
   if (!engine) return null
 
@@ -103,6 +97,11 @@ export default function Layout({
             <StyledNavigationItem>
               {address && <Button>{ellipsis(address, 8, 8)}</Button>}
             </StyledNavigationItem>
+            {!!claimable && (
+              <StyledNavigationItem>
+                <Button kind="secondary">{`Claimable $MARK: ${claimable}`}</Button>
+              </StyledNavigationItem>
+            )}
           </StyledNavigationList>
           <StyledNavigationList $align={ALIGN.right} />
         </HeaderNavigation>
