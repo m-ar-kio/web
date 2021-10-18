@@ -17,6 +17,13 @@ export default function CoffeeModal({ mark, onClose }) {
       }}
       isOpen={isOpen}
       unstable_ModalBackdropScroll
+      overrides={{
+        Dialog: {
+          style: ({ $theme }) => ({
+            height: "auto",
+          }),
+        },
+      }}
     >
       <ModalHeader>Buy me a cup of coffee</ModalHeader>
       <ModalBody>
