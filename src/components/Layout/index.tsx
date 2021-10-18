@@ -12,6 +12,7 @@ import { Button } from "baseui/button"
 import { Helmet } from "react-helmet"
 import { ToasterContainer } from "baseui/toast"
 import { Block } from "baseui/block"
+import { StatefulTooltip } from "baseui/tooltip"
 import "arconnect"
 import "../../styles/index.css"
 import LOGO from "../../images/logo.svg"
@@ -96,13 +97,34 @@ export default function Layout({
               <StyledLink href="/inbox">Inbox</StyledLink>
             </StyledNavigationItem>
             <StyledNavigationItem>
-              {address && <Button>{ellipsis(address, 8, 8)}</Button>}
+              {address && (
+                <StatefulTooltip
+                  content={() => (
+                    <Block padding="20px 0px">
+                      <p
+                        style={{ fontSize: 20, margin: 0, color: "#000" }}
+                      >{`Claimable $MARK: ${claimable}`}</p>
+                    </Block>
+                  )}
+                  returnFocus
+                  autoFocus
+                  overrides={{
+                    Body: {
+                      style: ({ $theme }) => ({
+                        backgroundColor: "white",
+                      }),
+                    },
+                    Inner: {
+                      style: ({ $theme }) => ({
+                        backgroundColor: "white",
+                      }),
+                    },
+                  }}
+                >
+                  <Button>{ellipsis(address, 8, 8)}</Button>
+                </StatefulTooltip>
+              )}
             </StyledNavigationItem>
-            {!!claimable && (
-              <StyledNavigationItem>
-                <Button kind="secondary">{`Claimable $MARK: ${claimable}`}</Button>
-              </StyledNavigationItem>
-            )}
           </StyledNavigationList>
           <StyledNavigationList $align={ALIGN.right} />
         </HeaderNavigation>

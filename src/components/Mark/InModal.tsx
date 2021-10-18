@@ -20,10 +20,15 @@ export default function MarkInModal({ mark, onClose }) {
       }}
       isOpen={isOpen}
       unstable_ModalBackdropScroll
+      overrides={{
+        Dialog: {
+          style: ({ $theme }) => ({
+            height: "auto",
+          }),
+        },
+      }}
     >
-      <FocusOnce>
-        <ModalHeader></ModalHeader>
-      </FocusOnce>
+      <ModalHeader></ModalHeader>
       <ModalBody>
         <Mark mark={mark} isInModal />
       </ModalBody>
