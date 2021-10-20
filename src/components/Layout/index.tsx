@@ -19,6 +19,7 @@ import LOGO from "../../images/logo.svg"
 import { ellipsis } from "../../utils/format"
 import { getClaimableMark } from "../../utils/pst"
 import { Paragraph3 } from "baseui/typography"
+import { Chrome, Feather } from "react-feather"
 
 export default function Layout({
   title,
@@ -95,6 +96,42 @@ export default function Layout({
             </StyledNavigationItem>
             <StyledNavigationItem>
               <StyledLink href="/inbox">Inbox</StyledLink>
+            </StyledNavigationItem>
+            <StyledNavigationItem>
+              <StatefulTooltip
+                content={() => (
+                  <Block padding="10px">
+                    <StyledLink
+                      href="https://chrome.google.com/webstore/detail/m-ar-k/bbjiedgkloappmaaolkcfalkkjomhoad"
+                      target="_blank"
+                      style={{
+                        fontSize: 18,
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Chrome style={{ marginRight: 10 }} />
+                      Chrome Extension
+                    </StyledLink>
+                  </Block>
+                )}
+                returnFocus
+                autoFocus
+                overrides={{
+                  Body: {
+                    style: ({ $theme }) => ({
+                      backgroundColor: "white",
+                    }),
+                  },
+                  Inner: {
+                    style: ({ $theme }) => ({
+                      backgroundColor: "white",
+                    }),
+                  },
+                }}
+              >
+                <StyledLink href="#">Download</StyledLink>
+              </StatefulTooltip>
             </StyledNavigationItem>
             <StyledNavigationItem>
               {address && (
