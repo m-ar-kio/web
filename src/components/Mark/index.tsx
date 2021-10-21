@@ -2,7 +2,7 @@ import * as React from "react"
 import urlParse from "url-parse"
 import SimpleMarkdown from "simple-markdown"
 import { initTwitterRules } from "./rules/twitter"
-import { isTwitter } from "./helper"
+import { isMirror, isTwitter } from "./helper"
 import Tweet from "./Tweet"
 import Article from "./Article"
 import { Block } from "baseui/block"
@@ -31,8 +31,9 @@ export default function Mark({ mark, isInModal, setCoffeeMark }: Props) {
   const parsedURL = urlParse(mark.origin, true)
 
   const _isTwitter = isTwitter(parsedURL.hostname)
+  const _isMirror = isMirror(parsedURL.hostname)
   let content = null
-  if (_isTwitter) {
+  if (_isTwitter || _isMirror) {
     content = (
       <Tweet
         tree={tree}

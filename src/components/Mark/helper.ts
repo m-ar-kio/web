@@ -1,5 +1,7 @@
 export const isTwitter = hostname => hostname.includes("twitter.com")
 
+export const isMirror = hostname => hostname.includes("mirror.xyz")
+
 export const isMedium = hostname => hostname.includes("medium.com")
 
 export const isNyTimes = hostname => hostname.includes("nytimes.com")
