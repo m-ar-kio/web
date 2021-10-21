@@ -3,6 +3,7 @@ import { Block } from "baseui/block"
 import MarkInModal from "./InModal"
 import Footer from "./Footer"
 import { isMirror, isTwitter } from "./helper"
+import Tags from "./Tags"
 
 export default function Tweet({
   tree,
@@ -34,6 +35,7 @@ export default function Tweet({
         {reactOutput(tree.slice(_isTwitter ? 2 : 1))}
       </Block>
       <Footer parsedURL={parsedURL} mark={mark} />
+      <Tags tags={mark.tags} />
       {!isInModal && viewMode && (
         <MarkInModal mark={mark} onClose={() => setViewMode(false)} />
       )}

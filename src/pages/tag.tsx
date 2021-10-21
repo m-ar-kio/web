@@ -1,18 +1,32 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Block } from "baseui/block"
 import Layout from "../components/Layout"
 import Mark from "../components/Mark"
-import { useMarkFlow } from "../hooks"
+import { fetchTxByTag } from "../hooks"
 import { H1 } from "baseui/typography"
 import { formatMark } from "../utils/format"
 import { Button } from "baseui/button"
 import CoffeeModal from "../components/Mark/CoffeeModal"
 import PacmanLoader from "react-spinners/PacmanLoader"
 
-function Index() {
+function TagPage() {
   const [page, setPage] = React.useState(1)
+  const [marks, setMarks] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
   const [coffeeMark, setCoffeeMark] = React.useState(null)
-  const { isLoading, marks } = useMarkFlow(page)
+
+  useEffect(() => {
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const params = Object.fromEntries(urlSearchParams.entries())
+    if (params.value) {
+      setIsLoading(true)
+      fetchTxByTag(page, params.value).then(_marks => {
+        setIsLoading(false)
+        setMarks(_marks)
+      })
+    }
+  }, [page])
 
   return (
     <Layout title="m-ar-k">
@@ -37,7 +51,7 @@ function Index() {
             />
           )
         })}
-        {!!marks.length && !isLoading && (
+        {!!marks.length && (
           <Button onClick={() => setPage(page + 1)}>LOAD MORE</Button>
         )}
         {!!coffeeMark && (
@@ -48,4 +62,4 @@ function Index() {
   )
 }
 
-export default Index
+export default TagPage

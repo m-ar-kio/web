@@ -16,18 +16,25 @@ const formatTX = (ids, arweave) => {
   )
 }
 
-export const useMarkFlow = (page = 1) => {
+export const useMarkFlow = (page = 1, tag = "") => {
   const [marks, setMarks] = useState([])
   const [isLoadingMarks, setIsLoadingMarks] = useState(true)
 
   useEffect(() => {
     async function fetch() {
+      let tagsQ = 'tags: { name: "App-Name", values: ["permamark"] }'
+      if (tag) {
+        tagsQ = `tags: [
+            { name: "App-Name", values: ["permamark"] },
+            { name: "${tag}", values: ["true"] }
+        ]`
+      }
       const query = gql`
         query {
           transactions(
             first: ${page * 10}
             recipients: ["FaZaQ48i0WXQyGXw68xuwuc6acUQoXYr8iLe8W-w234"]
-            tags: { name: "App-Name", values: ["permamark"] }
+            ${tagsQ}
           ) {
             edges {
               node {
@@ -78,7 +85,7 @@ export const useMarkFlow = (page = 1) => {
       })
     }
     fetch()
-  }, [page])
+  }, [page, tag])
 
   return {
     isLoading: isLoadingMarks,
@@ -155,4 +162,67 @@ export const useMyMarkFlow = (address, page = 1) => {
     isLoading: isLoadingMarks,
     marks,
   }
+}
+
+export async function fetchTxByTag(page = 1, tag = "") {
+  let tagsQ = 'tags: { name: "App-Name", values: ["permamark"] }'
+  if (tag) {
+    tagsQ = `tags: [
+            { name: "App-Name", values: ["permamark"] },
+            { name: "${tag}", values: ["true"] }
+        ]`
+  }
+  const query = gql`
+        query {
+          transactions(
+            first: ${page * 10}
+            recipients: ["FaZaQ48i0WXQyGXw68xuwuc6acUQoXYr8iLe8W-w234"]
+            ${tagsQ}
+          ) {
+            edges {
+              node {
+                id
+                owner {
+                  address
+                }
+                tags {
+                  name
+                  value
+                }
+              }
+            }
+          }
+        }
+      `
+
+  return import("arweave/web").then(async (Arweave: any) => {
+    const arweave = Arweave.default.init({
+      host: "arweave.net",
+      port: 443,
+      protocol: "https",
+    })
+
+    try {
+      const result = await request("https://arweave.net/graphql", query)
+      const txs = result.transactions.edges.map(t => t.node)
+      const ids = txs.map(t => t.id)
+      const datas = await formatTX(ids, arweave)
+      const mks = txs.map((t, idx) => {
+        if (!datas[idx]) return null
+        let bm = null
+        try {
+          bm = JSON.parse(arweave.utils.bufferToString(datas[idx]))
+        } catch (error) {
+          return null
+        }
+        return {
+          ...t,
+          bm,
+        }
+      })
+      return mks.filter(t => t)
+    } catch (error) {
+      return []
+    }
+  })
 }

@@ -8,7 +8,7 @@ function About() {
         <h1>About MARK</h1>
         <p>Mark is a bookmark tool running on arweave.</p>
         <p>
-          Every time you create a mark content, you spend fee and 0.02 AR for
+          Every time you create a mark content, you spend fee and 0.01 AR for
           PST fee which will be distributed to $MARK holders, but you'll get one
           claimable $MARK(not claimable for now).
         </p>

@@ -1,3 +1,5 @@
+import _ from "lodash"
+
 export const ellipsis = (
   str: string,
   lead: number = 3,
@@ -14,11 +16,15 @@ export const ellipsis = (
 
 export const formatMark = mark => {
   const tag = mark.tags.find(t => t.name === "Unix-Time")
+  const _tags = mark.tags
+    .filter(t => !["App-Name", "App-Version", "Unix-Time"].includes(t.name))
+    .map(t => t.name)
   return {
     content: mark.bm.content,
     origin: mark.bm.origin,
     txId: mark.id,
     timestamp: Number(tag.value),
     owner: mark.owner.address,
+    tags: _.uniq(_tags),
   }
 }

@@ -4,9 +4,9 @@ import Layout from "../components/Layout"
 import Mark from "../components/Mark"
 import { useMyMarkFlow } from "../hooks"
 import Login from "../components/Login"
-import { Spinner } from "baseui/spinner"
 import { H1 } from "baseui/typography"
 import { formatMark } from "../utils/format"
+import PacmanLoader from "react-spinners/PacmanLoader"
 
 function Index() {
   const [address, setAddress] = useState("")
@@ -29,7 +29,11 @@ function Index() {
       >
         {!address && <Login />}
         {address && <H1>My Marks</H1>}
-        {isLoading && <Spinner size="100px" color="#222326" />}
+        {isLoading && (
+          <div style={{ width: 300, height: 300, marginTop: 100 }}>
+            <PacmanLoader color="#000" loading={isLoading} size={50} />
+          </div>
+        )}
         {address &&
           marks.map(m => {
             return <Mark key={m.id} mark={formatMark(m)} />
