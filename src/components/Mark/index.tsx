@@ -55,9 +55,11 @@ export default function Mark({ mark, isInModal, setCoffeeMark }: Props) {
     )
   }
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator?.userAgent)
   return (
     <Block
-      width="800px"
+      width={isMobile ? "calc(100% - 30px)" : "800px"}
+      margin={isMobile ? "0px 10px" : "0px"}
       overrides={{
         Block: {
           style: {

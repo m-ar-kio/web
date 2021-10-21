@@ -2,6 +2,7 @@ import * as React from "react"
 import { Block } from "baseui/block"
 import { Tag, VARIANT } from "baseui/tag"
 import { getTagKind } from "./helper"
+import { StyledLink } from "baseui/link"
 
 export default function Tags({ tags }: { tags: string[] }) {
   if (!tags || !tags.length) {
@@ -14,20 +15,22 @@ export default function Tags({ tags }: { tags: string[] }) {
       justifyContent="flex-end"
       flexDirection="row"
       className="footer-tags"
+      paddingTop="5px"
     >
       {tags.map(t => {
         return (
-          <Tag
+          <StyledLink
             key={t}
-            closeable={false}
-            kind={getTagKind(t)}
-            variant="solid"
-            onClick={() => {
-              window.location.href = `/tag?value=${t}`
+            href={`/tag?value=${t}`}
+            style={{
+              marginLeft: 8,
+              background: "#222326",
+              color: "white",
+              padding: "4px 8px",
             }}
           >
             {`#${t}`}
-          </Tag>
+          </StyledLink>
         )
       })}
     </Block>

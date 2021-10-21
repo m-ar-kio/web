@@ -5,12 +5,14 @@ import dayjs from "dayjs"
 import Source from "./Source"
 
 export default function Footer({ mark, parsedURL }) {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator?.userAgent)
+
   return (
     <Block
       display="flex"
-      alignItems="center"
+      alignItems={isMobile ? "flex-start" : "center"}
       justifyContent="space-between"
-      flexDirection="row"
+      flexDirection={isMobile ? "column" : "row"}
       className="footer"
       overrides={{
         Block: {

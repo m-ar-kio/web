@@ -31,6 +31,10 @@ u {
     Helvetica Neue, sans-serif !important;
 }
 
+.mark.tweet .author {
+  overflow: hidden;
+}
+
 .mark.tweet .author a {
   font-size: 20px;
 }
@@ -52,7 +56,7 @@ u {
   font-size: 20px;
   line-height: 1.6;
   max-height: 200px;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .mark.in-modal .content {

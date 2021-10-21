@@ -68,6 +68,7 @@ export default function Layout({
   }, [address])
 
   if (!engine) return null
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator?.userAgent)
 
   return (
     <StyletronProvider value={engine}>
@@ -97,42 +98,44 @@ export default function Layout({
             <StyledNavigationItem>
               <StyledLink href="/inbox">Inbox</StyledLink>
             </StyledNavigationItem>
-            <StyledNavigationItem>
-              <StatefulTooltip
-                content={() => (
-                  <Block padding="10px">
-                    <StyledLink
-                      href="https://chrome.google.com/webstore/detail/m-ar-k/bbjiedgkloappmaaolkcfalkkjomhoad"
-                      target="_blank"
-                      style={{
-                        fontSize: 18,
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Chrome style={{ marginRight: 10 }} />
-                      Chrome Extension
-                    </StyledLink>
-                  </Block>
-                )}
-                returnFocus
-                autoFocus
-                overrides={{
-                  Body: {
-                    style: ({ $theme }) => ({
-                      backgroundColor: "white",
-                    }),
-                  },
-                  Inner: {
-                    style: ({ $theme }) => ({
-                      backgroundColor: "white",
-                    }),
-                  },
-                }}
-              >
-                <StyledLink href="#">Download</StyledLink>
-              </StatefulTooltip>
-            </StyledNavigationItem>
+            {!isMobile && (
+              <StyledNavigationItem>
+                <StatefulTooltip
+                  content={() => (
+                    <Block padding="10px">
+                      <StyledLink
+                        href="https://chrome.google.com/webstore/detail/m-ar-k/bbjiedgkloappmaaolkcfalkkjomhoad"
+                        target="_blank"
+                        style={{
+                          fontSize: 18,
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Chrome style={{ marginRight: 10 }} />
+                        Chrome Extension
+                      </StyledLink>
+                    </Block>
+                  )}
+                  returnFocus
+                  autoFocus
+                  overrides={{
+                    Body: {
+                      style: ({ $theme }) => ({
+                        backgroundColor: "white",
+                      }),
+                    },
+                    Inner: {
+                      style: ({ $theme }) => ({
+                        backgroundColor: "white",
+                      }),
+                    },
+                  }}
+                >
+                  <StyledLink href="#">Download</StyledLink>
+                </StatefulTooltip>
+              </StyledNavigationItem>
+            )}
             <StyledNavigationItem>
               {address && (
                 <StatefulTooltip
@@ -170,7 +173,7 @@ export default function Layout({
         <div
           style={{
             display: "flex",
-            flexFlow: "row nowrap",
+            flexFlow: isMobile ? "column nowrap" : "row nowrap",
             alignItems: "center",
             justifyContent: "space-between",
             background: "#333",
@@ -215,6 +218,7 @@ export default function Layout({
                   marginLeft: 10,
                   color: "white",
                   borderBottom: "1px solid white",
+                  wordBreak: "break-all",
                 }}
               >
                 WBnjVFK2haoNYtmepHBxejjYvl7yiYoWcndPOo-DoIg
