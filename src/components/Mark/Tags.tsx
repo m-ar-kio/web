@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Block } from "baseui/block"
-import { KIND, Tag, VARIANT } from "baseui/tag"
+import { Tag, VARIANT } from "baseui/tag"
 import { getTagKind } from "./helper"
 
 export default function Tags({ tags }: { tags: string[] }) {
@@ -21,7 +21,7 @@ export default function Tags({ tags }: { tags: string[] }) {
             key={t}
             closeable={false}
             kind={getTagKind(t)}
-            variant={VARIANT.solid}
+            variant="solid"
             onClick={() => {
               window.location.href = `/tag?value=${t}`
             }}
