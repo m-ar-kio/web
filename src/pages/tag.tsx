@@ -13,6 +13,7 @@ function TagPage() {
   const [page, setPage] = React.useState(1)
   const [marks, setMarks] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [tag, setTag] = useState("")
 
   const [coffeeMark, setCoffeeMark] = React.useState(null)
 
@@ -21,6 +22,7 @@ function TagPage() {
     const params = Object.fromEntries(urlSearchParams.entries())
     if (params.value) {
       setIsLoading(true)
+      setTag(params.value)
       fetchTxByTag(page, params.value).then(_marks => {
         setIsLoading(false)
         setMarks(_marks)
@@ -36,7 +38,18 @@ function TagPage() {
         flexDirection="column"
         justifyContent="center"
       >
-        <H1>Marks Flow</H1>
+        <H1>
+          Marks with
+          <span
+            style={{
+              background: "#222326",
+              color: "white",
+              padding: "0 10px",
+              margin: "0 10px",
+            }}
+          >{`#${tag}`}</span>
+          tag
+        </H1>
         {isLoading && (
           <div style={{ width: 300, height: 300, marginTop: 100 }}>
             <PacmanLoader color="#000" loading={isLoading} size={50} />

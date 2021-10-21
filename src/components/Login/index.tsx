@@ -3,6 +3,8 @@ import { FileUploader } from "baseui/file-uploader"
 import { Block } from "baseui/block"
 import { H1 } from "baseui/typography"
 import { Button } from "baseui/button"
+import { toaster } from "baseui/toast"
+import { TOAST_DURATION } from "../../utils/constants"
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = React.useState("")
@@ -79,6 +81,11 @@ export default function Login() {
               ])
               .then(value => {
                 window.location.reload()
+              })
+              .catch(error => {
+                toaster.negative(error.message, {
+                  autoHideDuration: TOAST_DURATION,
+                })
               })
           }}
         >
