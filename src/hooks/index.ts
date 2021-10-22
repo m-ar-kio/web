@@ -52,6 +52,7 @@ export const useMarkFlow = (page = 1, tag = "") => {
         }
       `
 
+      setIsLoadingMarks(true)
       import("arweave/web").then(async (Arweave: any) => {
         const arweave = Arweave.default.init({
           host: "arweave.net",
@@ -122,6 +123,7 @@ export const useMyMarkFlow = (address, page = 1) => {
         }
       `
 
+      setIsLoadingMarks(true)
       import("arweave/web").then(async (Arweave: any) => {
         const arweave = Arweave.default.init({
           host: "arweave.net",

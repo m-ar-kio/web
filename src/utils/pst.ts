@@ -7,6 +7,7 @@ export const getClaimableMark = async (address: string) => {
   const query = gql`
     query {
       transactions(
+        first: 10000
         owners: ["${address}"]
         tags: { name: "App-Name", values: ["permamark"] }
       ) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Provider as StyletronProvider } from "styletron-react"
-import { LightTheme, BaseProvider, DarkTheme } from "baseui"
+import { LightTheme, BaseProvider } from "baseui"
 import {
   HeaderNavigation,
   ALIGN,
@@ -12,14 +12,11 @@ import { Button } from "baseui/button"
 import { Helmet } from "react-helmet"
 import { ToasterContainer } from "baseui/toast"
 import { Block } from "baseui/block"
-import { StatefulTooltip } from "baseui/tooltip"
 import "arconnect"
 import "../../styles/index.css"
 import LOGO from "../../images/logo.svg"
 import { ellipsis } from "../../utils/format"
-import { getClaimableMark } from "../../utils/pst"
 import { Paragraph3 } from "baseui/typography"
-import { Chrome, Feather } from "react-feather"
 
 export default function Layout({
   title,
@@ -30,7 +27,6 @@ export default function Layout({
 }) {
   const [address, setAddress] = useState("")
   const [engine, setEngine] = useState(null)
-  const [claimable, setClaimable] = useState(0)
 
   useEffect(() => {
     import("styletron-engine-atomic").then(styletron => {
@@ -40,10 +36,6 @@ export default function Layout({
           : new styletron.Server()
       setEngine(_engine)
     })
-    if (address) {
-      getClaimableMark(address).then(value => setClaimable(value))
-      return
-    }
     if (typeof window !== "undefined") {
       const address = localStorage.getItem("address")
       if (address) {
@@ -100,70 +92,21 @@ export default function Layout({
             </StyledNavigationItem>
             {!isMobile && (
               <StyledNavigationItem>
-                <StatefulTooltip
-                  content={() => (
-                    <Block padding="10px">
-                      <StyledLink
-                        href="https://chrome.google.com/webstore/detail/m-ar-k/bbjiedgkloappmaaolkcfalkkjomhoad"
-                        target="_blank"
-                        style={{
-                          fontSize: 18,
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Chrome style={{ marginRight: 10 }} />
-                        Chrome Extension
-                      </StyledLink>
-                    </Block>
-                  )}
-                  returnFocus
-                  autoFocus
-                  overrides={{
-                    Body: {
-                      style: ({ $theme }) => ({
-                        backgroundColor: "white",
-                      }),
-                    },
-                    Inner: {
-                      style: ({ $theme }) => ({
-                        backgroundColor: "white",
-                      }),
-                    },
+                <StyledLink
+                  style={{
+                    fontSize: 18,
+                    display: "flex",
+                    alignItems: "center",
+                    flexFlow: "row nowrap",
                   }}
+                  href="https://chrome.google.com/webstore/detail/m-ar-k/bbjiedgkloappmaaolkcfalkkjomhoad"
                 >
-                  <StyledLink href="#">Download</StyledLink>
-                </StatefulTooltip>
+                  Download
+                </StyledLink>
               </StyledNavigationItem>
             )}
             <StyledNavigationItem>
-              {address && (
-                <StatefulTooltip
-                  content={() => (
-                    <Block padding="20px 0px">
-                      <p
-                        style={{ fontSize: 20, margin: 0, color: "#000" }}
-                      >{`Claimable $MARK: ${claimable}`}</p>
-                    </Block>
-                  )}
-                  returnFocus
-                  autoFocus
-                  overrides={{
-                    Body: {
-                      style: ({ $theme }) => ({
-                        backgroundColor: "white",
-                      }),
-                    },
-                    Inner: {
-                      style: ({ $theme }) => ({
-                        backgroundColor: "white",
-                      }),
-                    },
-                  }}
-                >
-                  <Button>{ellipsis(address, 8, 8)}</Button>
-                </StatefulTooltip>
-              )}
+              {address && <Button>{ellipsis(address, 8, 8)}</Button>}
             </StyledNavigationItem>
           </StyledNavigationList>
           <StyledNavigationList $align={ALIGN.right} />

@@ -37,8 +37,13 @@ function Index() {
             />
           )
         })}
-        {!!marks.length && !isLoading && (
-          <Button onClick={() => setPage(page + 1)}>LOAD MORE</Button>
+        {!!marks.length && (
+          <Button
+            isLoading={isLoading}
+            onClick={() => !isLoading && setPage(page + 1)}
+          >
+            LOAD MORE
+          </Button>
         )}
         {!!coffeeMark && (
           <CoffeeModal mark={coffeeMark} onClose={() => setCoffeeMark(null)} />
