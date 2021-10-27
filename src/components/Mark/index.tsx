@@ -7,7 +7,9 @@ import Tweet from "./Tweet"
 import Article from "./Article"
 import { Block } from "baseui/block"
 import { Button } from "baseui/button"
-import { Coffee } from "react-feather"
+import { Coffee, ThumbsUp } from "react-feather"
+import { like } from "../../utils/like"
+import { fetchLikeByTxId } from "../../hooks"
 
 interface Props {
   mark: any
@@ -29,6 +31,17 @@ export default function Mark({ mark, isInModal, setCoffeeMark }: Props) {
 
   const tree = parse(mark.content)
   const parsedURL = urlParse(mark.origin, true)
+
+  const [liked, setLiked] = React.useState(0)
+  React.useEffect(() => {
+    if (mark) {
+      fetchLikeByTxId(mark.txId)
+        .then(_liked => {
+          setLiked(_liked)
+        })
+        .catch(() => {})
+    }
+  }, [mark])
 
   const _isTwitter = isTwitter(parsedURL.hostname)
   const _isMirror = isMirror(parsedURL.hostname)
@@ -74,6 +87,30 @@ export default function Mark({ mark, isInModal, setCoffeeMark }: Props) {
       }}
     >
       {content}
+      {!!setCoffeeMark && (
+        <Button
+          kind="secondary"
+          overrides={{
+            BaseButton: {
+              style: {
+                position: "absolute",
+                right: "56px",
+                top: 0,
+              },
+            },
+          }}
+          onClick={async () => {
+            try {
+              like(mark.txId)
+            } catch (error) {
+              console.log(error)
+            }
+          }}
+          startEnhancer={() => <ThumbsUp />}
+        >
+          <span style={{ marginLeft: 2 }}>{liked}</span>
+        </Button>
+      )}
       {!!setCoffeeMark && (
         <Button
           kind="secondary"

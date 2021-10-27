@@ -1,6 +1,3 @@
-import Arweave from "arweave/web"
-import { readContract } from "smartweave"
-import { MARK_CONTRACT, MARK_OWNER } from "./constants"
 import { request, gql } from "graphql-request"
 
 export const getClaimableMark = async (address: string) => {
