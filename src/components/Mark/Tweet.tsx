@@ -15,6 +15,11 @@ export default function Tweet({
   const [viewMode, setViewMode] = React.useState(false)
   const _isTwitter = isTwitter(parsedURL.hostname)
   const _isMirror = isMirror(parsedURL.hostname)
+
+  let _tree = tree
+  if (_isTwitter) {
+    _tree = formatTwitterTree(tree)
+  }
   return (
     <Block
       className={`mark tweet ${isInModal ? "in-modal" : ""} ${
@@ -28,11 +33,11 @@ export default function Tweet({
         flexDirection="row"
         alignItems="center"
       >
-        {reactOutput(tree[0])}
-        {_isTwitter ? reactOutput(tree[1]) : ""}
+        {reactOutput(_tree[0])}
+        {_isTwitter ? reactOutput(_tree[1]) : ""}
       </Block>
       <Block className="content">
-        {reactOutput(tree.slice(_isTwitter ? 2 : 1))}
+        {reactOutput(_tree.slice(_isTwitter ? 2 : 1))}
       </Block>
       <Footer parsedURL={parsedURL} mark={mark} />
       <Tags tags={mark.tags} />
@@ -41,4 +46,24 @@ export default function Tweet({
       )}
     </Block>
   )
+}
+
+function formatTwitterTree(tree) {
+  let avatarIndex = 0
+  for (let index = 0; index < tree.length; index++) {
+    if (tree[index].content.length === 1) {
+      const content = tree[index].content[0]
+      if (
+        content &&
+        content.type === "link" &&
+        !content.title &&
+        !content.content.length
+      ) {
+        avatarIndex = 2
+        break
+      }
+    }
+  }
+  console.log(tree, avatarIndex)
+  return tree.slice(avatarIndex)
 }
