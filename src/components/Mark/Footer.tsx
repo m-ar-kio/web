@@ -38,7 +38,7 @@ export default function Footer({ mark, parsedURL }) {
       <span>
         <span style={{ marginRight: 4 }}>Marker:</span>
         <a
-          href={`https://viewblock.io/arweave/address/${mark.sender}`}
+          href={`https://viewblock.io/arweave/address/${mark.owner}`}
           target="_blank"
           rel="noreferrer"
         >
