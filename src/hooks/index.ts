@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { request, gql } from "graphql-request"
+import axios from "axios"
 
 const formatTX = (ids, arweave) => {
   return Promise.all(
@@ -227,4 +228,15 @@ export async function fetchTxByTag(page = 1, tag = "") {
       return []
     }
   })
+}
+
+export const fetchTopTags = async () => {
+  return axios
+    .get("https://analysis.m-ar-k.com/api/top-tags")
+    .then(res => {
+      return res.data
+    })
+    .catch(() => {
+      return []
+    })
 }

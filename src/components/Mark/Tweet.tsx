@@ -64,6 +64,5 @@ function formatTwitterTree(tree) {
       }
     }
   }
-  console.log(tree, avatarIndex)
   return tree.slice(avatarIndex)
 }
