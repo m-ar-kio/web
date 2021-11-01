@@ -17,7 +17,9 @@ export const ellipsis = (
 export const formatMark = mark => {
   const tag = mark.tags.find(t => t.name === "Unix-Time")
   const _tags = mark.tags
-    .filter(t => !["App-Name", "App-Version", "Unix-Time"].includes(t.name))
+    .filter(
+      t => !["App-Name", "App-Version", "Unix-Time", "origin"].includes(t.name)
+    )
     .map(t => t.name)
   return {
     content: mark.bm.content,
