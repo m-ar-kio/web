@@ -237,7 +237,7 @@ export async function fetchLikeByTxId(txId: string) {
             recipients: ["FaZaQ48i0WXQyGXw68xuwuc6acUQoXYr8iLe8W-w234"]
             tags: [
               { name: "App-Name", values: ["permamark-vote"] },
-              { name: "liked", values: ["${txId}"] }
+              { name: "markHash", values: ["${txId}"] }
             ]
           ) {
             edges {
@@ -245,10 +245,6 @@ export async function fetchLikeByTxId(txId: string) {
                 id
                 owner {
                   address
-                }
-                tags {
-                  name
-                  value
                 }
               }
             }
@@ -259,8 +255,8 @@ export async function fetchLikeByTxId(txId: string) {
   try {
     const result = await request("https://arweave.net/graphql", query)
     const txs = result.transactions.edges.map(t => t.node)
-    return txs.length
+    return txs
   } catch (error) {
-    return 0
+    return []
   }
 }
